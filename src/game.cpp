@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height) {
+Game::Game() {
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -20,6 +20,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running);
     Update();
+    renderer.Render();
     frame_end = SDL_GetTicks();
 
     // Keep track of how long each loop through the input/update/render cycle
