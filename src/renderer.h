@@ -4,6 +4,7 @@
 #include <vector>
 #include "SDL.h"
 #include "Ball.h"
+#include "Paddle.h"
 #include <memory>
 
 class Renderer {
@@ -22,6 +23,8 @@ class Renderer {
   const std::size_t screen_height;
 
   std::unique_ptr<Ball> ball;
+  std::unique_ptr<Paddle> paddle1;
+  std::unique_ptr<Paddle> paddle2;
 };
 
 #endif

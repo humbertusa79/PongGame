@@ -1,29 +1,30 @@
-#include "Ball.h"
+#include "Paddle.h"
 #include <iostream>
 
-Ball::Ball(double x, double y)  {
-    position = std::unique_ptr<GameVector>(new GameVector(x,y));
+Paddle::Paddle(double x, double y)  {
+    GameVector pos(x,y);
+    position = std::unique_ptr<GameVector>(new GameVector(x, y));
     rect.x = x;
 	rect.y = y;
 	rect.w = 15;
-	rect.h = 15;
+	rect.h = 60;
 }
 
-Ball::~Ball() {}
+Paddle::~Paddle() {}
 
-Ball::Ball(const Ball & other) : rect(other.rect){
+Paddle::Paddle(const Paddle & other) : rect(other.rect){
     position.reset(new GameVector(other.position->getComponents()._x, other.position->getComponents()._y));
-    std::cout << "ball copy constructor" << std::endl;
+    std::cout << "Paddle copy constructor" << std::endl;
 }
 
-Ball::Ball(Ball && other): rect(other.rect) {
-    std::cout << "ball move constructor" << std::endl;
+Paddle::Paddle(Paddle && other): rect(other.rect) {
+    std::cout << "Paddle move constructor" << std::endl;
     position = std::move(other.position);
     other.position = nullptr;
 }
 
-Ball & Ball::operator=(const Ball & other) {
-    std::cout << "ball copy = operator" << std::endl;
+Paddle & Paddle::operator=(const Paddle & other) {
+    std::cout << "Paddle copy = operator" << std::endl;
     if(this == &other) {
         return *this;
     }
@@ -32,8 +33,8 @@ Ball & Ball::operator=(const Ball & other) {
     return *this;
 }
 
-Ball & Ball::operator=(Ball &&other) {
-    std::cout << "ball move = operator" << std::endl;
+Paddle & Paddle::operator=(Paddle &&other) {
+    std::cout << "Paddle move = operator" << std::endl;
     if(this == &other) {
         return *this;
     }
@@ -43,7 +44,7 @@ Ball & Ball::operator=(Ball &&other) {
     return *this;
 }
 
-void Ball::Draw(SDL_Renderer* sdl_renderer) {
+void Paddle::Draw(SDL_Renderer* sdl_renderer) {
     rect.x = static_cast<int>(position->getComponents()._x);
 	rect.y = static_cast<int>(position->getComponents()._y);
 	SDL_RenderFillRect(sdl_renderer, &rect);

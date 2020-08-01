@@ -30,6 +30,8 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
   ball = std::make_unique<Ball>(screen_height/2.0, screen_width/2.0);
+  paddle1 = std::make_unique<Paddle>(80.0, screen_height/2.0);
+  paddle2 = std::make_unique<Paddle>(screen_width - 80.0, screen_height/2.0);
 }
 
 Renderer::~Renderer() {
@@ -49,7 +51,8 @@ void Renderer::Render() {
   }
 
   ball->Draw(sdl_renderer);
-
+  paddle1->Draw(sdl_renderer);
+  paddle2->Draw(sdl_renderer);
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }
