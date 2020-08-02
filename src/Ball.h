@@ -8,7 +8,7 @@
 
 static int BALL_WIDTH = 50;
 static int BALL_HEIGHT = 50;
-static const float BALL_SPEED = 0.0f;
+static const float BALL_SPEED = 1.0f;
 
 class Ball {
     public:
@@ -19,7 +19,7 @@ class Ball {
         Ball & operator=(const Ball & other);
         Ball & operator=(Ball &&other);
         void Draw(SDL_Renderer* sdl_renderer);
-        void Update(std::size_t dt);
+        void Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w);
         void setVelocity(double vx, double vy) {
             velocity.get()->setComponents(vx, vy);
         }

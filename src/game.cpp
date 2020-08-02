@@ -24,7 +24,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, paddle1.get(), paddle2.get(), screenHeight);
-    Update(target_frame_duration, screenHeight);
+    Update(target_frame_duration, screenHeight, screenWidth);
     renderer.Render(paddle1.get(), paddle2.get(), ball.get());
     frame_end = SDL_GetTicks();
 
@@ -49,8 +49,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
-void Game::Update(std::size_t dt, const std::size_t screen_h) {
-  //ball->Update(dt);
+void Game::Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w) {
+  ball->Update(dt, screen_w, screen_w);
   paddle1->Update(dt, screen_h);
   paddle2->Update(dt, screen_h);
 }

@@ -15,7 +15,7 @@ class Game {
 
  private:
   int score{0};
-  void Update(std::size_t dt, const std::size_t screen_h);
+  void Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w);
   std::unique_ptr<Ball> ball;
   std::unique_ptr<Paddle> paddle1;
   std::unique_ptr<Paddle> paddle2;

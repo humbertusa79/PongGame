@@ -50,10 +50,16 @@ Ball & Ball::operator=(Ball &&other) {
     return *this;
 }
 
-void Ball::Update(std::size_t dt) {
+void Ball::Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w) {
     auto newPositionY = position.get()->getComponents()._y + velocity.get()->getComponents()._y * dt;
-    auto positionX = position.get()->getComponents()._x * velocity.get()->getComponents()._x * dt;
-    position->setComponents(positionX, newPositionY); 
+    auto newPositionX = position.get()->getComponents()._x + velocity.get()->getComponents()._x * dt;
+    if(newPositionX < 0) {
+        velocity.get()->setComponents(BALL_SPEED,0.0f);
+    } else if(newPositionX > (screen_w - BALL_WIDTH)) {
+        velocity.get()->setComponents(-BALL_SPEED,0.0f);
+    }
+    newPositionX = position.get()->getComponents()._x + velocity.get()->getComponents()._x * dt;
+    position->setComponents(newPositionX, newPositionY); 
 }
 
 void Ball::Draw(SDL_Renderer* sdl_renderer) {

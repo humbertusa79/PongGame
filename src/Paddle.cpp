@@ -63,7 +63,7 @@ void Paddle::Update(std::size_t dt, const std::size_t screen_h) {
     auto positionX = position.get()->getComponents()._x;
     if(newPositionY < 0) {
         newPositionY = 0;
-    } else if(position->getComponents()._y > (screen_h - PADDLE_HEIGHT)) {
+    } else if(newPositionY > (screen_h - PADDLE_HEIGHT)) {
         newPositionY = screen_h - PADDLE_HEIGHT;
     }
     position->setComponents(positionX, newPositionY);   
