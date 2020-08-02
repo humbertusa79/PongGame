@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>
 
-Renderer::Renderer(const std::size_t screen_width,
-                   const std::size_t screen_height)
-    : screen_width(screen_width),
-      screen_height(screen_height) {
+Renderer::Renderer(const std::size_t screen_w,
+                   const std::size_t screen_h) {
+    screen_width = screen_w;
+    screen_height = screen_h;
   // Initialize SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cerr << "SDL could not initialize.\n";
@@ -30,8 +30,8 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
   ball = std::make_unique<Ball>(screen_height/2.0, screen_width/2.0);
-  paddle1 = std::make_unique<Paddle>(80.0, screen_height/2.0);
-  paddle2 = std::make_unique<Paddle>(screen_width - 80.0, screen_height/2.0);
+  paddle1 = std::make_unique<Paddle>(80.0, screen_height/2.0, std::make_unique<GameVector>(0.0f,0.0f));
+  paddle2 = std::make_unique<Paddle>(screen_width - 80.0, screen_height/2.0, std::make_unique<GameVector>(0.0f,0.0f));
 }
 
 Renderer::~Renderer() {

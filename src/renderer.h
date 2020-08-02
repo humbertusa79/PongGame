@@ -7,9 +7,13 @@
 #include "Paddle.h"
 #include <memory>
 
+
+static  std::size_t screen_width;
+static  std::size_t screen_height;
+
 class Renderer {
  public:
-  Renderer(const std::size_t screen_width, const std::size_t screen_height);
+  Renderer(const std::size_t screen_w, const std::size_t screen_h);
   ~Renderer();
 
   void Render();
@@ -18,10 +22,6 @@ class Renderer {
  private:
   SDL_Window *sdl_window;
   SDL_Renderer *sdl_renderer;
-
-  const std::size_t screen_width;
-  const std::size_t screen_height;
-
   std::unique_ptr<Ball> ball;
   std::unique_ptr<Paddle> paddle1;
   std::unique_ptr<Paddle> paddle2;

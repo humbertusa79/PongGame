@@ -22,7 +22,7 @@ class GameVector {
         GameVector & operator=(GameVector &&other);
 
         GameVector operator +(GameVector const& rhs);
-        GameVector operator *(float constant);
+        GameVector operator *(double constant);
         GameVector & operator +=(GameVector const& rhs);
 
         Position getComponents() {

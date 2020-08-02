@@ -44,7 +44,7 @@ GameVector& GameVector::operator=(GameVector &&other) {
     return GameVector(components._x + other.components._x, components._y + other.components._y);
 }
 
-GameVector GameVector::operator *(float constant) {
+GameVector GameVector::operator *(double constant) {
     return GameVector(components._x * constant, components._y * constant);
 }
 
