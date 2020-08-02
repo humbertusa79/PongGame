@@ -8,7 +8,7 @@
 #include <string>
 
 static int PADDLE_WIDTH = 50;
-static int PADDLE_HEIGHT = 50;
+static int PADDLE_HEIGHT = 90;
 static const float PADDLE_SPEED = 1.0f;
 
 class Paddle {
@@ -21,6 +21,9 @@ class Paddle {
         Paddle & operator=(Paddle &&other);
         void Draw(SDL_Renderer* sdl_renderer);
         void Update(std::size_t dt, const std::size_t screen_h);
+        GameVector* getPosition() {
+            return position.get();
+        }
         void setVelocity(double vx, double vy) {
             velocity.get()->setComponents(vx, vy);
         }

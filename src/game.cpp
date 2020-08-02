@@ -53,6 +53,46 @@ void Game::Update(std::size_t dt, const std::size_t screen_h, const std::size_t 
   ball->Update(dt, screen_w, screen_w);
   paddle1->Update(dt, screen_h);
   paddle2->Update(dt, screen_h);
+  if (VerifyPaddleBallCollision(paddle1.get(), ball.get()) || VerifyPaddleBallCollision(paddle2.get(), ball.get())) {
+    auto oldVelocityX = ball.get()->getVelocity()->getComponents()._x;
+    auto oldVelocityY = ball.get()->getVelocity()->getComponents()._y;
+    ball.get()->setVelocity(-oldVelocityX, oldVelocityY);
+  }
+}
+
+
+bool Game::VerifyPaddleBallCollision(Paddle* const paddle, Ball* const ball) {
+  float ballLeft = ball->getPosition()->getComponents()._x;
+	float ballRight = ball->getPosition()->getComponents()._x + BALL_WIDTH;
+	float ballTop = ball->getPosition()->getComponents()._y;
+	float ballBottom = ball->getPosition()->getComponents()._y + BALL_HEIGHT;
+
+	float paddleLeft = paddle->getPosition()->getComponents()._x + PADDLE_WIDTH / 2.0;
+	float paddleRight = paddle->getPosition()->getComponents()._x + PADDLE_WIDTH / 2.0;
+	float paddleTop = paddle->getPosition()->getComponents()._y;
+	float paddleBottom = paddle->getPosition()->getComponents()._y + PADDLE_HEIGHT;
+
+	if (ballLeft >= paddleRight)
+	{
+		return false;
+	}
+
+	if (ballRight <= paddleLeft)
+	{
+		return false;
+	}
+
+	if (ballTop >= paddleBottom)
+	{
+		return false;
+	}
+
+	if (ballBottom <= paddleTop)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 int Game::GetScore() const { return score; }

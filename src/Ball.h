@@ -20,6 +20,9 @@ class Ball {
         Ball & operator=(Ball &&other);
         void Draw(SDL_Renderer* sdl_renderer);
         void Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w);
+        GameVector* getPosition() {
+            return position.get();
+        }
         void setVelocity(double vx, double vy) {
             velocity.get()->setComponents(vx, vy);
         }
