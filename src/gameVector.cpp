@@ -1,5 +1,6 @@
 #include "gameVector.h"
 #include <math.h>
+#include <iostream>
 
 GameVector::GameVector(double component_x, double component_y) {
     this->components = Position(component_x, component_y);
@@ -22,7 +23,9 @@ GameVector & GameVector::operator=(const GameVector& other) {
     return *this;
 }
 
-GameVector::~GameVector() {}
+GameVector::~GameVector() {
+    std::cout << "Game Vector desructor called" << std::endl;
+}
 
 GameVector::GameVector(GameVector && other) {
     auto comp = other.getComponents();

@@ -16,6 +16,9 @@ class Game {
  private:
   int score{0};
   void Update();
+  std::unique_ptr<Ball> ball;
+  std::unique_ptr<Paddle> paddle1;
+  std::unique_ptr<Paddle> paddle2;
 };
 
 #endif

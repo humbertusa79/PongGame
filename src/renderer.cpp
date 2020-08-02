@@ -29,9 +29,6 @@ Renderer::Renderer(const std::size_t screen_w,
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
-  ball = std::make_unique<Ball>(screen_height/2.0, screen_width/2.0);
-  paddle1 = std::make_unique<Paddle>(80.0, screen_height/2.0, std::make_unique<GameVector>(0.0f,0.0f));
-  paddle2 = std::make_unique<Paddle>(screen_width - 80.0, screen_height/2.0, std::make_unique<GameVector>(0.0f,0.0f));
 }
 
 Renderer::~Renderer() {
@@ -39,7 +36,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render() {
+void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball) {
   // Clear screen
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
@@ -49,7 +46,6 @@ void Renderer::Render() {
       SDL_RenderDrawPoint(sdl_renderer, screen_width / 2, y);
     }
   }
-
   ball->Draw(sdl_renderer);
   paddle1->Draw(sdl_renderer);
   paddle2->Draw(sdl_renderer);

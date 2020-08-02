@@ -13,14 +13,19 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  auto screenWidth = renderer.screen_width;
+  auto screenHeight = renderer.screen_height;
+  ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0);
+  paddle1 = std::make_unique<Paddle>(80.0, screenHeight/2.0, 0.0f, 0.0f);
+  paddle2 = std::make_unique<Paddle>(screenWidth - 80.0, screenHeight/2.0, 0.0f, 0.0f);
 
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running);
+    controller.HandleInput(running, paddle1.get(), paddle2.get());
     Update();
-    renderer.Render();
+    renderer.Render(paddle1.get(), paddle2.get(), ball.get());
     frame_end = SDL_GetTicks();
 
     // Keep track of how long each loop through the input/update/render cycle

@@ -2,14 +2,16 @@
 #include <iostream>
 
 Ball::Ball(double x, double y)  {
-    position = std::unique_ptr<GameVector>(new GameVector(x,y));
-    rect.x = x;
-	rect.y = y;
+    position = std::make_unique<GameVector>(x,y);
+    rect.x = position.get()->getComponents()._x;
+	rect.y = position.get()->getComponents()._y;
 	rect.w = 15;
 	rect.h = 15;
 }
 
-Ball::~Ball() {}
+Ball::~Ball() {
+    std::cout << "Ball desructor called" << std::endl;
+}
 
 Ball::Ball(const Ball & other) : rect(other.rect){
     position.reset(new GameVector(other.position->getComponents()._x, other.position->getComponents()._y));
