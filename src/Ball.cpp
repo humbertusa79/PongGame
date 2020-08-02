@@ -55,7 +55,7 @@ void Ball::Update(std::size_t dt, const std::size_t screen_h, const std::size_t 
     auto newPositionX = position.get()->getComponents()._x + velocity.get()->getComponents()._x * dt;
     if(newPositionX < 0) {
         velocity.get()->setComponents(BALL_SPEED,0.0f);
-    } else if(newPositionX > (screen_w - BALL_WIDTH)) {
+    } else if(newPositionX > screen_w) {
         velocity.get()->setComponents(-BALL_SPEED,0.0f);
     }
     newPositionX = position.get()->getComponents()._x + velocity.get()->getComponents()._x * dt;
