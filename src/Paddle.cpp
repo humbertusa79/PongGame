@@ -2,15 +2,15 @@
 #include <iostream>
 #include "renderer.h"
 
-const float PADDLE_SPEED = 1.0f;
+const float PADDLE_SPEED = 10.0f;
 
-Paddle::Paddle(double x, double y, double vx, double vy)  {
+Paddle::Paddle(std::string identifier, double x, double y)  {
     position =  std::make_unique<GameVector>(x,y);
-    velocity =  std::make_unique<GameVector>(vx,vy);
     rect.x = position.get()->getComponents()._x;
 	rect.y = position.get()->getComponents()._y;
 	rect.w = 15;
 	rect.h = 60;
+    id = identifier;
 }
 
 Paddle::~Paddle() {
@@ -56,13 +56,13 @@ void Paddle::Draw(SDL_Renderer* sdl_renderer) {
 }
 
 void Paddle::Update(int direction, const std::size_t screen_h) {
-    auto newPositionX = velocity.get()->getComponents()._x;
-    auto newPositionY = velocity.get()->getComponents()._y * (PADDLE_SPEED * direction);
-    auto newPosition = std::make_unique<GameVector>(GameVector(newPositionX, newPositionY));
-    position = std::move(newPosition);
-    if(position->getComponents()._y < 0) {
-        position->setComponents(position->getComponents()._x, 0);
+    auto vPositionY = PADDLE_SPEED * direction;
+    auto newPositionY = position.get()->getComponents()._y + vPositionY;
+    auto positionX = position.get()->getComponents()._x;
+    if(newPositionY < 0) {
+        newPositionY = 0;
     } else if(position->getComponents()._y > (screen_h - PADDLE_HEIGHT)) {
-        position->setComponents(position->getComponents()._x, (screen_h - PADDLE_HEIGHT)); 
+        newPositionY = screen_h - PADDLE_HEIGHT;
     }
+    position->setComponents(positionX, newPositionY);   
 }

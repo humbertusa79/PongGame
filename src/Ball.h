@@ -19,22 +19,6 @@ class Ball {
         Ball & operator=(Ball &&other);
         void Draw(SDL_Renderer* sdl_renderer);
 
-        void setPosition(GameVector* pos) {;
-            position = std::make_unique<GameVector>(*pos);
-        }
-
-        GameVector* getPosition() {
-            return position.get();
-        }
-
-        void setRect(SDL_Rect rectangle) {
-            rect = rectangle;
-        }
-
-        SDL_Rect getRect() {
-            return rect;
-        }
-
     private:
         std::unique_ptr<GameVector> position;
         SDL_Rect rect {};

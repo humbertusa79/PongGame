@@ -16,14 +16,14 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   auto screenWidth = renderer.screen_width;
   auto screenHeight = renderer.screen_height;
   ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0);
-  paddle1 = std::make_unique<Paddle>(80.0, screenHeight/2.0, 0.0f, 0.0f);
-  paddle2 = std::make_unique<Paddle>(screenWidth - 80.0, screenHeight/2.0, 0.0f, 0.0f);
+  paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0);
+  paddle2 = std::make_unique<Paddle>("Paddle 2", screenWidth - 80.0, screenHeight/2.0);
 
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, paddle1.get(), paddle2.get());
+    controller.HandleInput(running, paddle1.get(), paddle2.get(), screenHeight);
     Update();
     renderer.Render(paddle1.get(), paddle2.get(), ball.get());
     frame_end = SDL_GetTicks();
