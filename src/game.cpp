@@ -15,16 +15,16 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   bool running = true;
   auto screenWidth = renderer.screen_width;
   auto screenHeight = renderer.screen_height;
-  ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0);
-  paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0);
-  paddle2 = std::make_unique<Paddle>("Paddle 2", screenWidth - 80.0, screenHeight/2.0);
+  ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0, BALL_SPEED, 0.0f);
+  paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0, 0.0f, 0.0f);
+  paddle2 = std::make_unique<Paddle>("Paddle 2", screenWidth - 80.0, screenHeight/2.0, 0.0f,0.0f);
 
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, paddle1.get(), paddle2.get(), screenHeight);
-    Update();
+    Update(target_frame_duration, screenHeight);
     renderer.Render(paddle1.get(), paddle2.get(), ball.get());
     frame_end = SDL_GetTicks();
 
@@ -49,7 +49,10 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
-void Game::Update() {
+void Game::Update(std::size_t dt, const std::size_t screen_h) {
+  //ball->Update(dt);
+  paddle1->Update(dt, screen_h);
+  paddle2->Update(dt, screen_h);
 }
 
 int Game::GetScore() const { return score; }

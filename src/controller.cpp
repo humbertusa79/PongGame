@@ -12,16 +12,30 @@ void Controller::HandleInput(bool &running, Paddle* paddle1, Paddle* paddle2, co
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
         case SDLK_w:
-          paddle1->Update(-1, screen_h);
+          paddle1->setVelocity(0, -PADDLE_SPEED);
           break;
         case SDLK_s:
-          paddle1->Update(1, screen_h);
+          paddle1->setVelocity(0, PADDLE_SPEED);
           break;
         case SDLK_UP:
-          paddle2->Update(-1, screen_h);
+          paddle2->setVelocity(0, -PADDLE_SPEED);
           break;
         case SDLK_DOWN:
-          paddle2->Update(1, screen_h);
+          paddle2->setVelocity(0, PADDLE_SPEED);
+          break;
+      }
+    } else if (e.type == SDL_KEYUP) {
+      switch (e.key.keysym.sym) {
+        case SDLK_w:
+          paddle1->setVelocity(0, 0);
+        case SDLK_s:
+          paddle1->setVelocity(0, 0);
+          break;
+        case SDLK_UP:
+          paddle2->setVelocity(0, 0);
+          break;
+        case SDLK_DOWN:
+          paddle2->setVelocity(0, 0);
           break;
       }
     }
