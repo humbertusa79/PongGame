@@ -5,10 +5,23 @@
 #include "gameVector.h"
 #include "SDL.h"
 #include <memory>
+#include "Paddle.h"
 
 static int BALL_WIDTH = 50;
 static int BALL_HEIGHT = 50;
 static const float BALL_SPEED = 1.0f;
+
+enum class CollisionType {
+    none,
+    bottom,
+    middle,
+    top
+};
+
+struct Contact {
+    CollisionType type;
+    float inside;
+};
 
 class Ball {
     public:
@@ -20,6 +33,8 @@ class Ball {
         Ball & operator=(Ball &&other);
         void Draw(SDL_Renderer* sdl_renderer);
         void Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w);
+        void CollideWithPaddle(Contact contact);
+        Contact VerifyPaddleBallCollision(Paddle* const paddle);
         GameVector* getPosition() {
             return position.get();
         }

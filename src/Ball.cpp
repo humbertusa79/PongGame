@@ -53,13 +53,85 @@ Ball & Ball::operator=(Ball &&other) {
 void Ball::Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w) {
     auto newPositionY = position.get()->getComponents()._y + velocity.get()->getComponents()._y * dt;
     auto newPositionX = position.get()->getComponents()._x + velocity.get()->getComponents()._x * dt;
-    // if(newPositionX < 0) {
-    //     velocity.get()->setComponents(BALL_SPEED,0.0f);
-    // } else if(newPositionX > screen_w) {
-    //     velocity.get()->setComponents(-BALL_SPEED,0.0f);
-    // }
-    // newPositionX = position.get()->getComponents()._x + velocity.get()->getComponents()._x * dt;
     position->setComponents(newPositionX, newPositionY); 
+}
+
+void Ball::CollideWithPaddle(Contact contact) {
+    position->setComponents(position->getComponents()._x + contact.inside, position->getComponents()._y);
+    velocity->setComponents(-velocity->getComponents()._x, velocity->getComponents()._y);
+    if (contact.type == CollisionType::top)
+    {
+        velocity->setComponents(velocity->getComponents()._x, -.75f * BALL_SPEED);
+    }
+    else if (contact.type == CollisionType::bottom)
+    {
+        velocity->setComponents(velocity->getComponents()._x, .75f * BALL_SPEED);
+    }
+}
+
+Contact Ball::VerifyPaddleBallCollision(Paddle* const paddle) {
+    float ballLeft = getPosition()->getComponents()._x;
+    float ballRight = getPosition()->getComponents()._x + BALL_WIDTH;
+    float ballTop = getPosition()->getComponents()._y;
+    float ballBottom = getPosition()->getComponents()._y + BALL_HEIGHT;
+
+    float paddleLeft = paddle->getPosition()->getComponents()._x + PADDLE_WIDTH / 2.0;
+    float paddleRight = paddle->getPosition()->getComponents()._x + PADDLE_WIDTH / 2.0;
+    float paddleTop = paddle->getPosition()->getComponents()._y;
+    float paddleBottom = paddle->getPosition()->getComponents()._y + PADDLE_HEIGHT;
+
+    Contact contact;
+    contact.type = CollisionType::none;
+    contact.inside = 0.0f;
+
+    if (ballLeft >= paddleRight)
+    {
+        return contact;
+    }
+
+    if (ballRight <= paddleLeft)
+    {
+        return contact;
+    }
+
+    if (ballTop >= paddleBottom)
+    {
+        return contact;
+    }
+
+    if (ballBottom <= paddleTop)
+    {
+        return contact;
+    }
+
+    float paddleRangeUpper = paddleBottom - (2.0f * PADDLE_HEIGHT / 3.0f);
+    float paddleRangeMiddle = paddleBottom - (PADDLE_HEIGHT / 3.0f);
+
+    if (velocity->getComponents()._x < 0)
+    {
+        contact.inside = paddleRight - ballLeft;
+    }
+    else if (velocity->getComponents()._x  > 0)
+    {
+        contact.inside = paddleLeft - ballRight;
+    }
+
+    if ((ballBottom > paddleTop)
+        && (ballBottom < paddleRangeUpper))
+    {
+        contact.type = CollisionType::top;
+    }
+    else if ((ballBottom > paddleRangeUpper)
+            && (ballBottom < paddleRangeMiddle))
+    {
+        contact.type = CollisionType::middle;
+    }
+    else
+    {
+        contact.type = CollisionType::bottom;
+    }
+
+    return contact;
 }
 
 void Ball::Draw(SDL_Renderer* sdl_renderer) {

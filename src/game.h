@@ -12,7 +12,7 @@ class Game {
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
-  bool VerifyPaddleBallCollision(Paddle* const paddle, Ball* const ball);
+  void CheckCollisions(Paddle* const paddleOne, Paddle* const paddleTwo, Ball* const ball);
 
  private:
   int score{0};
