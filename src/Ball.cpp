@@ -134,6 +134,63 @@ Contact Ball::VerifyPaddleBallCollision(Paddle* const paddle) {
     return contact;
 }
 
+
+Contact Ball::VerifyWallCollision(const std::size_t screen_h, const std::size_t screen_w) {
+	float ballLeft = getPosition()->getComponents()._x;
+	float ballRight = getPosition()->getComponents()._x + BALL_WIDTH;
+	float ballTop = getPosition()->getComponents()._y;
+	float ballBottom = getPosition()->getComponents()._y + BALL_HEIGHT;
+
+	Contact contact;
+    contact.type = CollisionType::none;
+    contact.inside = 0.0;
+
+	if (ballLeft < 0.0f)
+	{
+		contact.type = CollisionType::left;
+	}
+	else if (ballRight > screen_w)
+	{
+		contact.type = CollisionType::right;
+	}
+	else if (ballTop < 0.0f)
+	{
+		contact.type = CollisionType::top;
+		contact.inside = -ballTop;
+	}
+	else if (ballBottom > screen_h)
+	{
+		contact.type = CollisionType::bottom;
+		contact.inside = screen_h - ballBottom;
+	}
+
+	return contact;
+}
+
+
+void Ball::CollideWithWall(Contact contact, const std::size_t screen_h, const std::size_t screen_w) {
+    if ((contact.type == CollisionType::top) || (contact.type == CollisionType::bottom))
+    {
+        position->setComponents(position->getComponents()._x, position->getComponents()._y + contact.inside);
+        velocity->setComponents(velocity->getComponents()._x, -velocity->getComponents()._y);
+        return;
+    }
+
+    if (contact.type == CollisionType::left)
+    {
+        position->setComponents(screen_w / 2.0f, position->getComponents()._y / 2.0f);
+        velocity->setComponents(BALL_SPEED, BALL_SPEED * 0.75f);
+        return;
+    }
+
+    if (contact.type == CollisionType::right)
+    {
+        position->setComponents(screen_w / 2.0f, position->getComponents()._y / 2.0f);
+        velocity->setComponents(-BALL_SPEED, BALL_SPEED * 0.75f);
+        return;
+    }
+}
+
 void Ball::Draw(SDL_Renderer* sdl_renderer) {
     rect.x = static_cast<int>(position->getComponents()._x);
 	rect.y = static_cast<int>(position->getComponents()._y);

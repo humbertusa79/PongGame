@@ -15,7 +15,9 @@ enum class CollisionType {
     none,
     bottom,
     middle,
-    top
+    top,
+    left,
+    right
 };
 
 struct Contact {
@@ -35,6 +37,8 @@ class Ball {
         void Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w);
         void CollideWithPaddle(Contact contact);
         Contact VerifyPaddleBallCollision(Paddle* const paddle);
+        Contact VerifyWallCollision(const std::size_t screen_h, const std::size_t screen_w);
+        void CollideWithWall(Contact contact, const std::size_t screen_h, const std::size_t screen_w);
         GameVector* getPosition() {
             return position.get();
         }

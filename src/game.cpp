@@ -53,10 +53,10 @@ void Game::Update(std::size_t dt, const std::size_t screen_h, const std::size_t 
   paddle1->Update(dt, screen_h);
   paddle2->Update(dt, screen_h);
   ball->Update(dt, screen_w, screen_w);
-  CheckCollisions(paddle1.get(), paddle2.get(), ball.get());
+  CheckCollisions(paddle1.get(), paddle2.get(), ball.get(), screen_h, screen_w);
 }
 
-void Game::CheckCollisions(Paddle* const paddleOne, Paddle* const paddleTwo, Ball* const ball) {
+void Game::CheckCollisions(Paddle* const paddleOne, Paddle* const paddleTwo, Ball* const ball, const std::size_t screen_h, const std::size_t screen_w) {
   Contact contact;
   contact = ball->VerifyPaddleBallCollision(paddleOne);
   if (contact.type != CollisionType::none)
@@ -67,6 +67,12 @@ void Game::CheckCollisions(Paddle* const paddleOne, Paddle* const paddleTwo, Bal
   contact = ball->VerifyPaddleBallCollision(paddleTwo);
   if(contact.type != CollisionType::none) {
     ball->CollideWithPaddle(contact);
+    return;
+  }
+
+  contact = ball->VerifyWallCollision(screen_h, screen_w);
+  if(contact.type != CollisionType::none) {
+    ball->CollideWithWall(contact, screen_h, screen_w);
     return;
   }
 }
