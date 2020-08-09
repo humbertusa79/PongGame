@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height) {
+Game::Game() {
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -13,13 +13,19 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  auto screenWidth = renderer.screen_width;
+  auto screenHeight = renderer.screen_height;
+  ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0, BALL_SPEED, 0.0f);
+  paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0, 0.0f, 0.0f);
+  paddle2 = std::make_unique<Paddle>("Paddle 2", screenWidth - 80.0, screenHeight/2.0, 0.0f,0.0f);
 
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running);
-    Update();
+    controller.HandleInput(running, paddle1.get(), paddle2.get(), screenHeight);
+    Update(target_frame_duration, screenHeight, screenWidth);
+    renderer.Render(paddle1.get(), paddle2.get(), ball.get());
     frame_end = SDL_GetTicks();
 
     // Keep track of how long each loop through the input/update/render cycle
@@ -43,7 +49,32 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
-void Game::Update() {
+void Game::Update(std::size_t dt, const std::size_t screen_h, const std::size_t screen_w) {
+  paddle1->Update(dt, screen_h);
+  paddle2->Update(dt, screen_h);
+  ball->Update(dt, screen_w, screen_w);
+  CheckCollisions(paddle1.get(), paddle2.get(), ball.get(), screen_h, screen_w);
+}
+
+void Game::CheckCollisions(Paddle* const paddleOne, Paddle* const paddleTwo, Ball* const ball, const std::size_t screen_h, const std::size_t screen_w) {
+  Contact contact;
+  contact = ball->VerifyPaddleBallCollision(paddleOne);
+  if (contact.type != CollisionType::none)
+  {
+	  ball->CollideWithPaddle(contact);
+    return;
+  }
+  contact = ball->VerifyPaddleBallCollision(paddleTwo);
+  if(contact.type != CollisionType::none) {
+    ball->CollideWithPaddle(contact);
+    return;
+  }
+
+  contact = ball->VerifyWallCollision(screen_h, screen_w);
+  if(contact.type != CollisionType::none) {
+    ball->CollideWithWall(contact, screen_h, screen_w);
+    return;
+  }
 }
 
 int Game::GetScore() const { return score; }
