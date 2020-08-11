@@ -29,10 +29,19 @@ Renderer::Renderer(const std::size_t screen_w,
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
+  TTF_Init();
+  TTF_Font* font = TTF_OpenFont("../resources/Lemonada-Bold.ttf", 25);
+  SDL_Color color = { 255, 255, 255 };
+  SDL_Surface * surface = TTF_RenderText_Solid(font,"Welcome", color);
+  texture = SDL_CreateTextureFromSurface(sdl_renderer,surface);
+  TTF_CloseFont(font);
+  SDL_FreeSurface(surface);
 }
 
 Renderer::~Renderer() {
-  SDL_DestroyWindow(sdl_window);
+  SDL_DestroyWindow(sdl_window); 
+  SDL_DestroyTexture(texture);
+  TTF_Quit();
   SDL_Quit();
 }
 
@@ -49,6 +58,7 @@ void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball) {
   ball->Draw(sdl_renderer);
   paddle1->Draw(sdl_renderer);
   paddle2->Draw(sdl_renderer);
+  DrawText();
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }
@@ -56,4 +66,9 @@ void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball) {
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{" FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+
+void Renderer::DrawText() {  
+  SDL_RenderCopy(sdl_renderer, texture, NULL, NULL);
 }

@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include <memory>
+#include "SDL_ttf.h"
 
 class Renderer {
  public:
@@ -16,10 +17,12 @@ class Renderer {
 
   void Render(Paddle* paddle1, Paddle* paddle2, Ball* ball);
   void UpdateWindowTitle(int score, int fps);
+  void DrawText();
 
  private:
   SDL_Window *sdl_window;
   SDL_Renderer *sdl_renderer;
+  SDL_Texture * texture;
 };
 
 #endif

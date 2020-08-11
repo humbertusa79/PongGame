@@ -18,7 +18,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0, BALL_SPEED, 0.0f);
   paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0, 0.0f, 0.0f);
   paddle2 = std::make_unique<Paddle>("Paddle 2", screenWidth - 80.0, screenHeight/2.0, 0.0f,0.0f);
-
   while (running) {
     frame_start = SDL_GetTicks();
 
