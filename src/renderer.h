@@ -16,7 +16,7 @@ class Renderer {
   ~Renderer();
 
   void Render(Paddle* paddle1, Paddle* paddle2, Ball* ball, Player* player1, Player* player2);
-  void UpdateWindowTitle(int score, int fps);
+  void UpdateWindowTitle(int fps);
   void SetTexture(Player* player);
 
  private:

@@ -58,7 +58,7 @@ void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball, Player* play
   SDL_RenderPresent(sdl_renderer);
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
+void Renderer::UpdateWindowTitle(int fps) {
   std::string title{" FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
