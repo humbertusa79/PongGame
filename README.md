@@ -1,12 +1,6 @@
-# CPPND: Capstone Snake Game Example
+# CPPND: Capstone Pong Game
 
-This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
-
-<img src="snake_game.gif"/>
-
-The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
-
-In this project, you can build your own C++ application or extend this Snake game, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
+Pong Game using as base code the starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses. Also as a source of inspiration the blog https://austinmorlan.com/posts/pong_clone/ help to create this game.
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
@@ -23,9 +17,17 @@ In this project, you can build your own C++ application or extend this Snake gam
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 
+* SDL_ttf 2.0.15, recommended used Brew install SDL_ttf for Mac and Linux. 
+  * Linux: https://www.libsdl.org/projects/SDL_ttf/
+  * Mac: https://www.libsdl.org/projects/SDL_ttf/
+  * Windows: https://www.libsdl.org/projects/SDL_ttf/
+
 ## Basic Build Instructions
 
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./SnakeGame`.
+4. Run it: `./PongGame`.
+
+
+
