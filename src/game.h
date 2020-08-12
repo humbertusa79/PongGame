@@ -20,6 +20,8 @@ class Game {
   std::unique_ptr<Ball> ball;
   std::unique_ptr<Paddle> paddle1;
   std::unique_ptr<Paddle> paddle2;
+  std::unique_ptr<Player> player1;
+  std::unique_ptr<Player> player2;
 };
 
 #endif

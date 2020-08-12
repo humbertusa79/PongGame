@@ -18,13 +18,19 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0, BALL_SPEED, 0.0f);
   paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0, 0.0f, 0.0f);
   paddle2 = std::make_unique<Paddle>("Paddle 2", screenWidth - 80.0, screenHeight/2.0, 0.0f,0.0f);
+  double scoreWidth = 100;
+  double scoreHeight = 100;
+  player1 = std::make_unique<Player>((screenWidth/4.0) - (scoreWidth/2.0), 0, scoreWidth, scoreHeight);
+  player2 = std::make_unique<Player>(3 * (screenWidth/4.0) - (scoreWidth/2.0), 0, scoreWidth, scoreHeight);
+  renderer.SetTexture(player1.get());
+  renderer.SetTexture(player2.get());
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, paddle1.get(), paddle2.get(), screenHeight);
     Update(target_frame_duration, screenHeight, screenWidth);
-    renderer.Render(paddle1.get(), paddle2.get(), ball.get());
+    renderer.Render(paddle1.get(), paddle2.get(), ball.get(), player1.get(), player2.get());
     frame_end = SDL_GetTicks();
 
     // Keep track of how long each loop through the input/update/render cycle
