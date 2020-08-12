@@ -29,5 +29,6 @@ Pong Game using as base code the starter repo for the Capstone project in the [U
 3. Compile: `cmake .. && make`
 4. Run it: `./PongGame`.
 
+![pong](https://user-images.githubusercontent.com/51099172/89977139-418bcf80-dc1f-11ea-856f-f5ac5b3e2161.jpg)
 
 
