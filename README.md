@@ -49,8 +49,6 @@ Pong Game using as base code the starter repo for the Capstone project in the [U
       * Rule of five implemented in GameVector, Paddle and Ball classes.
       * use of descrutors in player to clean the fonts.
       * use of unique_ptr.
-      
-  * E.- Concurrency:
     
    
 ## Dependencies for Running Locally
