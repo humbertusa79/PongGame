@@ -14,7 +14,7 @@ Pong Game using as base code the starter repo for the Capstone project in the [U
   * 1.- When the left wall is hit by the ball the score for player2 increment, when the right wall is hit player's 1 score is incremented.
  
 * Initial state:
-  * 1.- On game start the ball starts in the middle and moves in direction to the right wall.
+  * 1.- On game start the ball starts in the middle of the screen and moves in direction to the right wall. After that it starts again from the middle of the screen and moves in directionto the paddle of the player that scored last.
   * 2.- The scores increment by 1. There is no limit for now.
 
 * What's next:
