@@ -2,8 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-GameVector::GameVector(double component_x, double component_y) {
-    this->components = Position(component_x, component_y);
+GameVector::GameVector(double component_x, double component_y): components(Position(component_x, component_y)) {
     magnitude = pow(components._x, 2) + pow(components._y, 2);
 }
 

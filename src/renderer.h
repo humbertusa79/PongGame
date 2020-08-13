@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "Player.h"
 #include <memory>
 
 class Renderer {
@@ -14,8 +15,9 @@ class Renderer {
   Renderer(const std::size_t screen_w, const std::size_t screen_h);
   ~Renderer();
 
-  void Render(Paddle* paddle1, Paddle* paddle2, Ball* ball);
-  void UpdateWindowTitle(int score, int fps);
+  void Render(Paddle* paddle1, Paddle* paddle2, Ball* ball, Player* player1, Player* player2);
+  void UpdateWindowTitle(int fps);
+  void SetTexture(Player* player);
 
  private:
   SDL_Window *sdl_window;

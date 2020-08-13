@@ -32,11 +32,14 @@ Renderer::Renderer(const std::size_t screen_w,
 }
 
 Renderer::~Renderer() {
-  SDL_DestroyWindow(sdl_window);
-  SDL_Quit();
+  SDL_DestroyWindow(sdl_window); 
 }
 
-void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball) {
+void Renderer::SetTexture(Player* player) {
+  player->setTexture(sdl_renderer);
+}
+
+void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball, Player* player1, Player* player2) {
   // Clear screen
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
@@ -49,11 +52,13 @@ void Renderer::Render(Paddle* paddle1, Paddle* paddle2, Ball* ball) {
   ball->Draw(sdl_renderer);
   paddle1->Draw(sdl_renderer);
   paddle2->Draw(sdl_renderer);
+  player1->Draw(sdl_renderer);
+  player2->Draw(sdl_renderer);
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
+void Renderer::UpdateWindowTitle(int fps) {
   std::string title{" FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
