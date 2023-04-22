@@ -13,7 +13,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
-  auto screenWidth = renderer.screen_width;
+  auto screenWidth = renderer.screen_width;   
   auto screenHeight = renderer.screen_height;
   ball = std::make_unique<Ball>(screenWidth/2.0, screenWidth/2.0, BALL_SPEED, 0.0f);
   paddle1 = std::make_unique<Paddle>("Paddle 1", 80.0, screenHeight/2.0, 0.0f, 0.0f);
